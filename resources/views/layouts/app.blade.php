@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="shortcut icon" href="{{url('clave.png')}}" type="image/x-icon" />
+
     <title>Ensino Musical</title>
 
     <!-- Fonts -->
@@ -42,7 +44,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @auth
-                        @include('admin.menu')
+                        @include('admin.menu')                        
                     @endauth
                 </ul>
 
@@ -83,4 +85,47 @@
     </div>
     
 </body>
+<script>
+    $(document).ready(function(){
+
+        $('.tel').val(function(){
+            var numeros = $(this).val()
+            var telefone = ''
+            if(numeros.length > 0 && numeros.length <= 10)
+                telefone = '(' + numeros.substring(0, 2) + ') ' + numeros.substring(2, 6) + '-' + numeros.substring(6, 10)
+            else if(numeros.length > 10)
+                telefone = '(' + numeros.substring(0, 2) + ') ' + numeros.charAt(2) + numeros.substring(3, 7) + '-' + numeros.substring(7, 11)
+            
+            if(numeros != '')
+                return telefone
+        })
+                
+        $('.tel').keyup(function(){
+            var telefone = $(this).val()
+            var numeros = ''
+            for(var i = 0; i < telefone.length; i++){
+                if(telefone.charAt(i) == 0 || telefone.charAt(i) == 1 || telefone.charAt(i) == 2 || telefone.charAt(i) == 3 || telefone.charAt(i) == 4 || telefone.charAt(i) == 5 || telefone.charAt(i) == 6 || telefone.charAt(i) == 7 || telefone.charAt(i) == 8 || telefone.charAt(i) == 9)
+                    numeros += telefone.charAt(i)
+            }
+            var mascara = ''
+            for(var i = 0; i < numeros.length; i++){
+                if(i == 0)
+                    mascara = '(' + numeros.charAt(i)
+                else if(i == 3 || i == 4 || i == 5 || i == 8 || i == 9 || i == 10 || i == 11)
+                    mascara += numeros.charAt(i)
+                else if(i == 1)
+                    mascara = mascara + numeros.charAt(i) + ') '
+                else if(i == 6 && numeros.length < 12)
+                    mascara = mascara + numeros.charAt(i) + '-'
+                else if(i == 6)
+                    mascara = mascara + numeros.charAt(i)
+                else if(i == 7 && numeros.length >= 12)
+                    mascara = mascara + numeros.charAt(i) + '-'
+                else if(i == 7)
+                    mascara = mascara + numeros.charAt(i)               
+            }
+            $(this).val(mascara)
+        })
+    })
+</script>
 </html>

@@ -35,16 +35,7 @@ class Aulaspraticas extends Migration
         $table->boolean('apto');
         
         $table->String('observacao');
-        
-        /**
-         * Foreignkeys section
-         */
-        
-        
-        
-        // type your addition here
 
-        });
     }
 
     /**

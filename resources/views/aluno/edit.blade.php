@@ -6,7 +6,7 @@
                 <div class="panel-heading">Editar Aluno de <b>{{ $plano->ano . "." . $plano->turma }}</b></div>
 
                 <div class="panel-body">
-
+                    @include('admin.info')
                     <form method="POST" action="{{ url('/plano/' . $aluno->plano_id . '/aluno/' . $aluno->id) }}" accept-charset="UTF-8" enctype="multipart/form-data">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
@@ -16,6 +16,18 @@
                             <div class="col-md-12">
                                 <input class="form-control" name="name" type="text" id="name" value="{{ $aluno->name }}" required>
                                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="enderco" class="col-md-4 control-label">{{ 'Endereço' }}</label>
+                            <div class="col-md-12">
+                                <input id="endereco" name="endereco" type="text" value="{{$aluno->endereco}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="bairro" class="col-md-4 control-label">{{ 'Bairro' }}</label>
+                            <div class="col-md-12">
+                                <input id="bairro" name="bairro" type="text" value="{{$aluno->bairro}}" class="form-control">
                             </div>
                         </div>
                         <div class="row {{ $errors->has('email') ? 'has-error' : ''}}">
@@ -28,7 +40,7 @@
                         <div class="row {{ $errors->has('telefone') ? 'has-error' : ''}}">
                             <label for="telefone" class="col-md-4 control-label">{{ 'Telefone' }}</label>
                             <div class="col-md-12">
-                                <input class="form-control" name="telefone" type="number" id="telefone" value="{{ $aluno->telefone }}" required>
+                                <input class="form-control tel" name="telefone" type="text" id="telefone" value="{{ $aluno->telefone }}" maxlength="15">
                                 {!! $errors->first('telefone', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
@@ -83,6 +95,12 @@
                                 {!! $errors->first('instrumento', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
+                        <div class="row">
+                            <label for="foto" class="col-md-2 control-label">{{ 'Foto' }}</label>
+                            <div class="col-md-12">
+                                <input id="foto" name = "foto" type="file" title="Foto" class="form-control" value="{{$aluno->foto}}">
+                            </div>
+                        </div>
                         <hr>
                         <div class="row {{ $errors->has('responsavel') ? 'has-error' : ''}}" >
                             <label for="responsavel" class="col-md-4 control-label">{{ 'Responsável' }}</label>
@@ -94,7 +112,7 @@
                         <div class="row {{ $errors->has('contato') ? 'has-error' : ''}}" >
                             <label for="contato" class="col-md-4 control-label">{{ 'Contato' }}</label>
                             <div class="col-md-12">
-                                <input class="form-control" name="contato" type="number" id="contato" value="{{ $aluno->contato_resp }}">
+                                <input class="form-control tel" name="contato" type="text" id="contato" value="{{ $aluno->contato_resp }}" maxlength="15" >
                                 {!! $errors->first('contato', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
@@ -107,7 +125,7 @@
                         </div>                        
                         <div class="form-group" style="margin-top: 6px;">
                             <div class="pull-left">
-                                <button class="btn btn-success" type="submit">
+                                <button class="btn btn-success btsbmt" type="submit">
                                     <i class="fa fa-check" aria-hidden="true"></i> Gravar
                                 </button>
                             </div>

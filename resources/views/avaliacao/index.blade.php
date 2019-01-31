@@ -30,7 +30,9 @@
                                     <th>Módulo</th>
                                     <th>Conteúdo</th>
                                     <th>Nota</th>
-                                    <th style="width: 210px !important;">Ações</th>
+                                    @if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor')
+                                        <th style="width: 210px !important;">Ações</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,13 +71,16 @@
                                         @else
                                             <td style="text-align: right; color: black">{!!number_format($avaliacao->nota , 1)!!}</td>
                                         @endif
-                                        <td>                                            
-                                            <a href = "{{ url('/plano/' . $plano_id . '/aluno/' . $aluno->id . '/avaliacao/' . $avaliacao->id . '/edit') }}" title="Editar">
-                                                <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </button>
-                                            </a>
-                                        </td>
+                                        
+                                        @if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor')
+                                            <td>                                            
+                                                <a href = "{{ url('/plano/' . $plano_id . '/aluno/' . $aluno->id . '/avaliacao/' . $avaliacao->id . '/edit') }}" title="Editar">
+                                                    <button class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach 
                             </tbody>

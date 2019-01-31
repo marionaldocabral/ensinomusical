@@ -1,7 +1,13 @@
 @extends('layouts.app')
 @section('content')
-    @if($aluno->status == 'iniciante' || $aluno->status == 'ensaio')
-        <div class="row">
+    <div>
+        <label><b>Exibir:</b></label>
+        <input type="checkbox" id="ckb_rjm" style="margin-left: 15px" checked> Reunião de Jovens
+        <input type="checkbox" id="ckb_oficial" style="margin-left: 15px" checked> Culto Oficial
+        <input type="checkbox" id="ckb_oficializacao" style="margin-left: 15px" checked> Oficialização
+    </div>
+    <br>
+        <div class="row" id="div_rjm">
             <div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -12,7 +18,7 @@
                             <table class="table table-borderless">
                                 <tr>
                                     @for($i = 431; $i <= 455; $i++)
-                                        @if(in_array($i, $passados))
+                                        @if(in_array($i, $passados_rjm))
                                             <td style="color: lightgray; padding-right: 10px; padding-left: 10px">{{$i}}</td>
                                         @else
                                             <td style="color: black; padding-right: 10px; padding-left: 10px">{{$i}}</td>
@@ -21,7 +27,7 @@
                                 </tr>
                                 <tr>
                                     @for($i = 456; $i <= 480; $i++)
-                                        @if(in_array($i, $passados))
+                                        @if(in_array($i, $passados_rjm))
                                             <td style="color: lightgray; padding-right: 10px; padding-left: 10px">{{$i}}</td>
                                         @else
                                             <td style="color: black; padding-right: 10px; padding-left: 10px">{{$i}}</td>
@@ -34,10 +40,8 @@
                 </div>
             </div>
         </div>
-    @endif
 
-    @if($aluno->status == 'rjm')
-        <div class="row">
+        <div class="row" id="div_oficial">
             <div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -48,7 +52,7 @@
                             <table class="table table-borderless">
                                 <tr>
                                     @for($i = 1; $i <= 100; $i++)
-                                        @if(in_array($i, $passados))
+                                        @if(in_array($i, $passados_oficial))
                                             <td style="color: lightgray; padding-right: 10px; padding-left: 10px">{{$i}}</td>
                                         @else
                                             <td style="color: black; padding-right: 10px; padding-left: 10px">{{$i}}</td>
@@ -57,7 +61,7 @@
                                 </tr>
                                 <tr>
                                     @for($i = 101; $i <= 200; $i++)
-                                        @if(in_array($i, $passados))
+                                        @if(in_array($i, $passados_oficial))
                                             <td style="color: lightgray; padding-right: 10px; padding-left: 10px">{{$i}}</td>
                                         @else
                                             <td style="color: black; padding-right: 10px; padding-left: 10px">{{$i}}</td>
@@ -66,7 +70,7 @@
                                 </tr>
                                 <tr>
                                     @for($i = 201; $i <= 300; $i++)
-                                        @if(in_array($i, $passados))
+                                        @if(in_array($i, $passados_oficial))
                                             <td style="color: lightgray; padding-right: 10px; padding-left: 10px">{{$i}}</td>
                                         @else
                                             <td style="color: black; padding-right: 10px; padding-left: 10px">{{$i}}</td>
@@ -75,7 +79,7 @@
                                 </tr>
                                 <tr>
                                     @for($i = 301; $i <= 400; $i++)
-                                        @if(in_array($i, $passados))
+                                        @if(in_array($i, $passados_oficial))
                                             <td style="color: lightgray; padding-right: 10px; padding-left: 10px">{{$i}}</td>
                                         @else
                                             <td style="color: black; padding-right: 10px; padding-left: 10px">{{$i}}</td>
@@ -84,7 +88,7 @@
                                 </tr>
                                 <tr>
                                     @for($i = 401; $i <= 480; $i++)
-                                        @if(in_array($i, $passados))
+                                        @if(in_array($i, $passados_oficial))
                                             <td style="color: lightgray; padding-right: 10px; padding-left: 10px">{{$i}}</td>
                                         @else
                                             <td style="color: black; padding-right: 10px; padding-left: 10px">{{$i}}</td>
@@ -97,9 +101,8 @@
                 </div>
             </div>
         </div>
-    @endif
-    @if($aluno->status == 'oficial')
-        <div class="row">
+
+        <div class="row" id="div_oficializacao">
             <div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -154,7 +157,6 @@
                 </div>
             </div>
         </div>
-    @endif
 
     <div class="row">
         <div>
@@ -165,11 +167,13 @@
                 <div class="panel-body">
                     @include('admin.info')
                     <div class="form-group">
-                        <div class="pull-left">
-                            <a href="{{ url('plano/' . $plano_id . '/aluno/' . $aluno->id . '/hino/' . 'create') }}" class="btn btn-success">
-                                <i class="fa fa-plus" aria-hidden="true"></i> Nova
-                            </a>
-                        </div>
+                        @if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor')
+                            <div class="pull-left">
+                                <a href="{{ url('plano/' . $plano_id . '/aluno/' . $aluno->id . '/hino/' . 'create') }}" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Nova
+                                </a>
+                            </div>
+                        @endif
                         <div class="pull-right">
                             <a href="{{ url('/plano/' . $plano_id . '/aluno/' . $aluno->id) }}" class="btn btn-warning">
                                 <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar
@@ -185,14 +189,22 @@
                                     <th>Hino</th>
                                     <th>Voz</th>
                                     <th>Status</th>
-                                    <th>Finalidade</th>
+                                    <!--<th>Finalidade</th>-->
                                     <th>Observações</th>
-                                    <th style="width: 210px !important;">Ações</th>
+                                    @if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor')
+                                        <th style="width: 210px !important;">Ações</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($hinos as $hino)
-                                    <tr>
+                                    @if($hino->finalidade == 1)
+                                        <tr class="hn_rjm">
+                                    @elseif($hino->finalidade == 2)
+                                        <tr class="hn_oficial">
+                                    @elseif($hino->finalidade == 3)
+                                        <tr class="hn_oficializacao">
+                                    @endif
                                         <td>{!!$hino->data!!}</td>
                                         <td>{!!$hino->numero!!}</td>
                                         <td>
@@ -235,37 +247,28 @@
                                                 {{"Inapto"}}
                                             @endif
                                         </td>
-                                        <td>
-                                            @if($hino->finalidade == 1)
-                                                {{'Reunião de Jovens e Menores'}}
-                                            @elseif($hino->finalidade == 2)
-                                                {{'Culto Oficial'}}
-                                            @elseif($hino->finalidade == 3)
-                                                {{'Oficialização'}}
-                                            @elseif($hino->finalidade == 4)
-                                                {{'Revisão'}}
-                                            @endif                                            
-                                        </td>
                                         <td>{!!$hino->observacao!!}</td>
-                                        <td>
-                                            <a href = "{{ url('plano/'. $plano_id . '/aluno/' . $aluno->id . '/hino/' . $hino->id) }}" title="Visualizar">
-                                                <button class="btn btn-info btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                </button>
-                                            </a>
-                                            <a href = "{{ url('/plano/' . $plano_id . '/aluno/' . $aluno->id . '/hino/' . $hino->id . '/edit') }}" title="Editar">
-                                                <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </button>
-                                            </a>
-                                            <form method="POST" action="{{ url('plano/' . $plano_id .'/aluno/' . $aluno->id . '/hino/' . $hino->id) }}" accept-charset="UTF-8" style="display:inline">
-                                                {{ method_field('DELETE') }}
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Excluir" onclick="return confirm(&quot;Confirma exclusão?&quot;)">
-                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                </button>
-                                            </form>    
-                                        </td>
+                                        @if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor')
+                                            <td>
+                                                <a href = "{{ url('plano/'. $plano_id . '/aluno/' . $aluno->id . '/hino/' . $hino->id) }}" title="Visualizar">
+                                                    <button class="btn btn-info btn-sm">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    </button>
+                                                </a>
+                                                <a href = "{{ url('/plano/' . $plano_id . '/aluno/' . $aluno->id . '/hino/' . $hino->id . '/edit') }}" title="Editar">
+                                                    <button class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                    </button>
+                                                </a>
+                                                <form method="POST" action="{{ url('plano/' . $plano_id .'/aluno/' . $aluno->id . '/hino/' . $hino->id) }}" accept-charset="UTF-8" style="display:inline">
+                                                    {{ method_field('DELETE') }}
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Excluir" onclick="return confirm(&quot;Confirma exclusão?&quot;)">
+                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>    
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach 
                             </tbody>
@@ -275,4 +278,23 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            
+            $('#ckb_rjm').click(function(){
+                $('#div_rjm').toggle()
+                $('.hn_rjm').toggle();
+            })
+
+            $('#ckb_oficial').click(function(){
+                $('#div_oficial').toggle()
+                $('.hn_oficial').toggle()
+            })
+
+            $('#ckb_oficializacao').click(function(){
+                $('#div_oficializacao').toggle()
+                $('.hn_oficializacao').toggle()
+            })
+        })
+    </script>
 @endsection

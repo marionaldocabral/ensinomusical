@@ -21,7 +21,7 @@
                         <div class="row {{ $errors->has('numero') ? 'has-error' : ''}}">
                             <label for="data" class="col-md-4 control-label">{{ 'Hino' }}</label>
                             <div class="col-md-12">
-                                <input class="form-control" name="numero" type="number" id="numero" value="{{ $hino->numero }}" required>
+                                <input class="form-control" name="numero" type="number" id="numero" value="{{ $hino->numero }}" required max="486" min="1">
                                 {!! $errors->first('numero', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>

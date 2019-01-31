@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -7,7 +6,7 @@
                 <div class="panel-heading">Editar Usuário</div>
 
                 <div class="panel-body">
-
+                    @include('admin.info')
                     <form method="POST" action="{{ url('/user/' . $user->id) }}" accept-charset="UTF-8" enctype="multipart/form-data">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
@@ -16,6 +15,18 @@
                             <div class="col-md-12">
                                 <input class="form-control" name="name" type="text" id="name" value="{{ $user->name }}" required>
                                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="enderco" class="col-md-4 control-label">{{ 'Endereço' }}</label>
+                            <div class="col-md-12">
+                                <input id="endereco" name="endereco" type="text" value="{{$user->endereco}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="bairro" class="col-md-4 control-label">{{ 'Bairro' }}</label>
+                            <div class="col-md-12">
+                                <input id="bairro" name="bairro" type="text" value="{{$user->bairro}}" class="form-control">
                             </div>
                         </div>
                         <div class="row {{ $errors->has('email') ? 'has-error' : ''}}">
@@ -28,7 +39,7 @@
                         <div class="row {{ $errors->has('telefone') ? 'has-error' : ''}}">
                             <label for="telefone" class="col-md-4 control-label">{{ 'Telefone' }}</label>
                             <div class="col-md-12">
-                                <input class="form-control" name="telefone" type="number" id="telefone" value="{{ $user->telefone }}" required>
+                                <input class="form-control tel" name="telefone" type="text" id="telefone" value="{{ $user->telefone }}" maxlength="15" required>
                                 {!! $errors->first('telefone', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
@@ -96,18 +107,35 @@
                                 {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
-                        <div class="row {{ $errors->has('responsavel') ? 'has-error' : ''}}" >
-                            <label for="responsavel" class="col-md-4 control-label">{{ 'Responsável' }}</label>
+                        <div class="row {{ $errors->has('localidade_id') ? ' has-error' : '' }}">
+                            <label for="localidade_id" class="col-md-4 control-label">{{ 'Localidade' }}</label>
                             <div class="col-md-12">
-                                <input class="form-control" name="responsavel" type="text" id="responsavel" value="{{ $user->responsavel }}">
-                                {!! $errors->first('responsavel', '<p class="help-block">:message</p>') !!}
+                                <select id="localidade_id" name="localidade_id" class="form-control" value="{{old('localidade_id')}}">
+                                    <option value="{!! $localidade->id !!}" selected>{!! $localidade->nome !!}</option>
+                                    @foreach($localidades as $localidade)
+                                        <option value="{!! $localidade->id !!}">{!! $localidade->nome !!}</option>
+                                    @endforeach
+                                </select>                
+                                {!!$errors->first('localidade_id', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
-                        <div class="row {{ $errors->has('contato') ? 'has-error' : ''}}" >
-                            <label for="contato" class="col-md-4 control-label">{{ 'Contato' }}</label>
+                        <div class="row {{ $errors->has('plano_id') ? ' has-error' : '' }}">
+                            <label for="plano_id" class="col-md-4 control-label">{{ 'Plano' }}</label>
                             <div class="col-md-12">
-                                <input class="form-control" name="contato" type="number" id="contato" value="{{ $user->contato }}">
-                                {!! $errors->first('contato', '<p class="help-block">:message</p>') !!}
+                                <select id="plano_id" name="plano_id" class="form-control" value={{old('plano_id')}}>
+                                    <option value="{!! $plano->id !!}" selected>{!! $localidade->nome . " - " . $plano->ano . "." . $plano->turma !!}</option>
+                                    @foreach($planos as $plano)
+                                        <option value="{!! $plano->id !!}">
+                                            @foreach($localidades as $localidade)
+                                                @if($localidade->id == $plano->localidade_id)
+                                                    {!! $localidade->nome . " - " . $plano->ano . "." . $plano->turma !!}
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        </option>
+                                    @endforeach
+                                </select>                
+                                {!!$errors->first('plano_id', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
                         <div class="row {{ $errors->has('instrumento') ? 'has-error' : ''}}" >
@@ -122,6 +150,53 @@
                                     @endforeach
                                 </select>
                                 {!! $errors->first('instrumento', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="foto" class="col-md-2 control-label">{{ 'Foto' }}</label>
+                            <div class="col-md-12">
+                                <input id="foto" name = "foto" type="file" title="Foto" class="form-control" value="{{$user->foto}}">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row {{ $errors->has('responsavel') ? 'has-error' : ''}}" >
+                            <label for="responsavel" class="col-md-4 control-label">{{ 'Responsável' }}</label>
+                            <div class="col-md-12">
+                                <input class="form-control" name="responsavel" type="text" id="responsavel" value="{{ $user->responsavel }}">
+                                {!! $errors->first('responsavel', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row {{ $errors->has('contato') ? 'has-error' : ''}}" >
+                            <label for="contato" class="col-md-4 control-label">{{ 'Contato' }}</label>
+                            <div class="col-md-12">
+                                <input class="form-control tel" name="contato_resp" type="text" id="contato" value="{{ $user->contato_resp }}" maxlength="15">
+                                {!! $errors->first('contato', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row {{ $errors->has('email_resp') ? 'has-error' : ''}}" >
+                            <label for="email_resp" class="col-md-4 control-label">{{ 'Email' }}</label>
+                            <div class="col-md-12">
+                                <input class="form-control" name="email_resp" type="email" id="email_resp" value="{{ $user->email_resp }}">
+                                {!! $errors->first('email_resp', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row {{ $errors->has('senha') ? ' has-error' : '' }}">
+                            <label for="senha" class="col-md-4 control-label">Senha</label>
+                            <div class="col-md-12">
+                                <input id="senha" type="password" class="form-control" name="password">
+                                @if ($errors->has('senha'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('senha') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="password-confirm" class="col-md-4 control-label">Confirme a Senha</label>
+
+                            <div class="col-md-12">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                             </div>
                         </div>
                         <div class="form-group" style="margin-top: 6px;">

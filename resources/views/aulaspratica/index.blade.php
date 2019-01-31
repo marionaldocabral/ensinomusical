@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="row">
         <div>
@@ -10,11 +9,13 @@
                 <div class="panel-body">
                     @include('admin.info')
                     <div class="form-group">
-                        <div class="pull-left">
-                            <a href="{{ url('plano/' . $plano->id . '/aluno/' . $aluno->id . '/metodo/' . 'create') }}" class="btn btn-success">
-                                <i class="fa fa-plus" aria-hidden="true"></i> Nova
-                            </a>
-                        </div>
+                        @if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor')
+                            <div class="pull-left">
+                                <a href="{{ url('plano/' . $plano->id . '/aluno/' . $aluno->id . '/metodo/' . 'create') }}" class="btn btn-success">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Nova
+                                </a>
+                            </div>
+                        @endif
                         <div class="pull-right">
                             <a href="{{ url('/plano/' . $plano->id . '/aluno/' . $aluno->id) }}" class="btn btn-warning">
                                 <i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar

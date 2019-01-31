@@ -17,6 +17,12 @@ class AddAlterFieldsTableAulaspraticas extends Migration
              $table->string('metodo');
              $table->integer('pagina');
              $table->integer('licao');
+             $table->integer('instrutor_id')->unsigned();
+             $table->foreign('instrutor_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('restrict');
+
             //
         });
     }

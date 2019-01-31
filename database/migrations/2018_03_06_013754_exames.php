@@ -34,7 +34,7 @@ class Exames extends Migration
         
         $table->boolean('apto');
         
-        $table->String('observacao')->nullables();
+        $table->String('observacao')->nullable();
         
         /**
          * Foreignkeys section

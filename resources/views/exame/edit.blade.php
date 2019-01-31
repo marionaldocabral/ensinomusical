@@ -26,7 +26,7 @@
                                     @elseif($exame->categoria == 'oficial')
                                         <option value="oficial" selected>Culto Oficial</option>
                                     @else
-                                        <option value="oficializacao" selected>Oficialização</option>
+                                        <option value="oficializado" selected>Oficialização</option>
                                     @endif
 
 
@@ -39,8 +39,8 @@
                                     @if($nivel < 4 && $exame->categoria != 'oficial')
                                         <option value="oficial">Culto Oficial</option>
                                     @endif
-                                    @if($nivel < 5 && $exame->categoria != 'oficializacao')
-                                        <option value="oficializacao">Oficialização</option>
+                                    @if($nivel < 5 && $exame->categoria != 'oficializado')
+                                        <option value="oficializado">Oficialização</option>
                                     @endif
                                 </select>
                                 {!! $errors->first('categoria', '<p class="help-block">:message</p>') !!}

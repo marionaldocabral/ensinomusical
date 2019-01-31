@@ -17,11 +17,11 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('telefone');
+            $table->string('telefone')->nullable();
             $table->string('nascimento');
             $table->string('status');
-            $table->string('responsavel')->nullabel();
-            $table->string('contato_resp')->nullabel();
+            $table->string('responsavel')->nullable();
+            $table->string('contato_resp')->nullable();
             $table->integer('localidade_id')->unsigned();
             $table->foreign('localidade_id')
                     ->references('id')
@@ -34,8 +34,10 @@ class CreateUsersTable extends Migration
                     ->on('planos')
                     ->onUpdate('restrict')
                     ->onDelete('cascade');
-            $table->string('foto')->nullabel();
-            $table->string('instrumento')->nullabel();
+            $table->string('foto')->nullable();
+            $table->string('instrumento')->nullable();
+            $table->string('endereco')->nullable();
+            $table->string('bairro')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -18,6 +18,18 @@
                                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
+                        <div class="row">
+                            <label for="enderco" class="col-md-4 control-label">{{ 'Endereço' }}</label>
+                            <div class="col-md-12">
+                                <input id="endereco" name="endereco" type="text" value="{{old('endereco')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="bairro" class="col-md-4 control-label">{{ 'Bairro' }}</label>
+                            <div class="col-md-12">
+                                <input id="bairro" name="bairro" type="text" value="{{old('bairro')}}" class="form-control">
+                            </div>
+                        </div>
                          <div class="row {{ $errors->has('email') ? 'has-error' : ''}}">
                             <label for="email" class="col-md-4 control-label">{{ 'Email' }}</label>
                             <div class="col-md-12">
@@ -28,7 +40,7 @@
                          <div class="row {{ $errors->has('telefone') ? 'has-error' : ''}}">
                             <label for="telefone" class="col-md-4 control-label">{{ 'Telefone' }}</label>
                             <div class="col-md-12">
-                                <input id="telefone" name="telefone" type="number" value="{{old('telefone')}}" class="form-control" required>
+                                <input id="telefone" name="telefone" type="text" value="{{old('telefone')}}" class="form-control tel" maxlength="15" required>
                                 {!! $errors->first('telefone', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
@@ -54,20 +66,6 @@
                                     <option value="enc_regional">Encarregado Regional</option>
                                 </select>
                                 {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-                            </div>
-                        </div>
-                        <div class="row {{ $errors->has('responsavel') ? 'has-error' : ''}}">
-                            <label for="responsavel" class="col-md-4 control-label">{{ 'Responsável' }}</label>
-                            <div class="col-md-12">
-                                <input id="responsavel" name="responsavel" type="text" value="{{old('responsavel')}}" class="form-control">
-                                {!! $errors->first('responsavel', '<p class="help-block">:message</p>') !!}
-                            </div>
-                        </div>
-                        <div class="row {{ $errors->has('contato_resp') ? 'has-error' : ''}}">
-                            <label for="contato_resp" class="col-md-4 control-label">{{ 'Contato' }}</label>
-                            <div class="col-md-12">
-                                <input id="contato_resp" name="contato_resp" type="number" value="{{old('contato_resp')}}" class="form-control">
-                                {!! $errors->first('contato_resp', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
                         <div class="row {{ $errors->has('localidade_id') ? ' has-error' : '' }}">
@@ -110,6 +108,35 @@
                                 {!!$errors->first('instrumento', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
+                        <div class="row">
+                            <label for="foto" class="col-md-2 control-label">{{ 'Foto' }}</label>
+                            <div class="col-md-12">
+                                <input id="foto" name = "foto" type="file" title="Foto" class="form-control" value="">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row {{ $errors->has('responsavel') ? 'has-error' : ''}}">
+                            <label for="responsavel" class="col-md-4 control-label">{{ 'Responsável' }}</label>
+                            <div class="col-md-12">
+                                <input id="responsavel" name="responsavel" type="text" value="{{old('responsavel')}}" class="form-control">
+                                {!! $errors->first('responsavel', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row {{ $errors->has('contato_resp') ? 'has-error' : ''}}">
+                            <label for="contato_resp" class="col-md-4 control-label">{{ 'Contato' }}</label>
+                            <div class="col-md-12">
+                                <input id="contato_resp" name="contato_resp" type="text" value="{{old('contato_resp')}}" class="form-control tel" maxlength="15">
+                                {!! $errors->first('contato_resp', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row {{ $errors->has('email_resp') ? 'has-error' : ''}}">
+                            <label for="email_resp" class="col-md-4 control-label">{{ 'Email' }}</label>
+                            <div class="col-md-12">
+                                <input id="email_resp" name="email_resp" type="email" value="{{old('email_resp')}}" class="form-control">
+                                {!! $errors->first('email_resp', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <br>
                         <div class="row {{ $errors->has('adm') ? ' has-error' : '' }}">
                             <label for="adm" class="col-md-4 control-label">{{ 'Administrador' }}</label>
                             <div class="col-md-12">

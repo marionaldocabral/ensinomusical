@@ -26,7 +26,8 @@
                         <thead>
                             <tr>
                                 <th>Ano</th>
-                                <th>Turma</th>                     
+                                <th>Turma</th>
+                                <th>Localidade</th>                     
                                 <th style="width: 210px !important;">Ações</th>
                             </tr>
                         </thead>
@@ -34,7 +35,8 @@
                             @foreach($planos as $plano)                                  
                                 <tr>
                                     <td>{!!$plano->ano!!}</td>
-                                    <td>{!!$plano->turma!!}</td>                                        
+                                    <td>{!!$plano->turma!!}</td>
+                                    <td>{{$plano->nome}}</td>
                                     <td>
                                         <a href = "{{ url('/plano_/' . $plano->id) }}" title="Visualizar">
                                             <button class="btn btn-info btn-sm">

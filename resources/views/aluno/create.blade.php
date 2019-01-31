@@ -10,11 +10,28 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ url('/plano/' . $plano->id . '/aluno') }}" accept-charset="UTF-8" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        @if(session('erro'))
+                            <div class="alert alert-danger">
+                                {{ session('erro') }}                            
+                            </div>
+                        @endif
                         <div class="row {{ $errors->has('name') ? 'has-error' : ''}}">
                             <label for="name" class="col-md-4 control-label">{{ 'Nome' }}</label>
                             <div class="col-md-12">
                                 <input id="name" name = "name" type="text" class="form-control" required>
                                 {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="enderco" class="col-md-4 control-label">{{ 'Endereço' }}</label>
+                            <div class="col-md-12">
+                                <input id="endereco" name="endereco" type="text" value="{{old('endereco')}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="bairro" class="col-md-4 control-label">{{ 'Bairro' }}</label>
+                            <div class="col-md-12">
+                                <input id="bairro" name="bairro" type="text" value="{{old('bairro')}}" class="form-control">
                             </div>
                         </div>
                         <div class="row {{ $errors->has('email') ? 'has-error' : ''}}">
@@ -27,7 +44,7 @@
                         <div class="row {{ $errors->has('telefone') ? 'has-error' : ''}}">
                             <label for="telefone" class="col-md-4 control-label">{{ 'Telefone' }}</label>
                             <div class="col-md-12">
-                                <input id="telefone" name = "telefone" type="number" class="form-control">
+                                <input id="telefone" name = "telefone" type="text" class="form-control tel" maxlength="15" required>
                                 {!! $errors->first('telefone', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
@@ -79,6 +96,12 @@
                                 {!! $errors->first('adm', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
+                        <div class="row">
+                            <label for="foto" class="col-md-2 control-label">{{ 'Foto' }}</label>
+                            <div class="col-md-12">
+                                <input id="foto" name = "foto" type="file" title="Foto" class="form-control">
+                            </div>
+                        </div>
                         <hr>
                         <div class="row {{ $errors->has('responsavel') ? 'has-error' : ''}}">
                             <label for="responsavel" class="col-md-4 control-label">{{ 'Responsável' }}</label>
@@ -90,7 +113,7 @@
                         <div class="row {{ $errors->has('contato_resp') ? 'has-error' : ''}}">
                             <label for="contato_resp" class="col-md-4 control-label">{{ 'Contato' }}</label>
                             <div class="col-md-12">
-                                <input id="contato_resp" name = "contato_resp" type="number" class="form-control">
+                                <input id="contato_resp" name = "contato_resp" type="text" class="form-control tel" maxlength="15">
                                 {!! $errors->first('contato_resp', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>

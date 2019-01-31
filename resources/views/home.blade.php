@@ -1,11 +1,12 @@
 @extends('layouts.app')
 @section('content')
-@if(Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor' || Auth::user()->status == 'auxiliar')
+@if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor' || Auth::user()->status == 'auxiliar')
     <div class="container">
         <div class="row">
             <div class="col-md-12 ">
+                @include('admin.info')
                 <div class="panel panel-default">
-                    <div class="panel-heading"><b>Painel de Controle</b></div>
+                    <div class="panel-heading"><b>Resumo</b></div>
                     <div class="panel-body">
                         @if (session('status'))
                             <div class="alert alert-success">
@@ -13,24 +14,12 @@
                             </div>
                         @endif
                         <div>
-                            @if(Auth::user()->adm == true)
-                                <a style="padding: 2%; color: red" href="{{ url('/paise') }}"><i class="fa fa-globe"></i> Países</a>
-                                <a style="padding: 2%; color: red" href="{{ url('/estado') }}"><i class="fa fa-star-o"></i> Estados</a>
-                                <a style="padding: 2%; color: red" href="{{ url('/cidade') }}"><i class="fa fa-star-half-o"></i> Cidades</a>
-                                <a style="padding: 2%; color: red" href="{{ url('/localidade') }}"><i class="fa fa-location-arrow"></i> Localidades</a>
-                                <a style="padding: 2%; color: red" href="{{ url('/plano_') }}"><i class="fa fa-bars"></i> Planos</a>
-                                <a style="padding: 2%; color: red" href="{{ url('/user') }}"><i class="fa fa-users"></i> Usuários</a>
-                                <a style="padding: 2%; color: red" href="{{ url('/feriado') }}"><i class="fa fa-calendar"></i> Feriados</a>
-                                <a style="padding: 2%; color: red" href="{{ url('/instrumento') }}"><i class="fa fa-music"></i> Instrumentos</a>
-                                <hr>                    
-                            @endif
-                            
                             <div class="table-responsive">
                                 <table class="table table-borderless">
                                     <thead>
                                         <th>Localidade</th>
-                                        <th>Encarregado Regional</th>
-                                        <th>Encarregado Local</th>
+                                        <th>Enc. Reg.</th>
+                                        <th>Enc. Local</th>
                                         <th>Músicos</th>
                                         <th>Organistas</th>
                                         <th>Alunos</th>
@@ -119,10 +108,24 @@
                                             <tr>
                                                 <td>{{$musico->name}}</td>
                                                 <td>
-                                                    @if($musico->status == 'oficial')
+                                                    @if($musico->status == 'iniciante')
+                                                        {{'Iniciante'}}
+                                                    @elseif($musico->status == 'ensaio')
+                                                        {{'Ensaio'}}
+                                                    @elseif($musico->status == 'rjm')
+                                                        {{'Reunião de Jovens e Menores'}}
+                                                    @elseif($musico->status == 'oficial')
                                                         {{'Culto Oficial'}}
-                                                    @elseif($musico->status == 'oficializado' || $musico->status == 'auxiliar' || $musico->status == 'instrutor' || $musico->status == 'enc_local' || $musico->status == 'enc_regional')
+                                                    @elseif($musico->status == 'oficializado')
                                                         {{'Oficializado'}}
+                                                    @elseif($musico->status == 'auxiliar')
+                                                        {{'Auxiliar'}}
+                                                    @elseif($musico->status == 'instrutor')
+                                                        {{'Instrutor'}}
+                                                    @elseif($musico->status == 'enc_local')
+                                                        {{'Encarregado Local'}}
+                                                    @elseif($musico->status == 'enc_regional')
+                                                        {{'Encarregado Regional'}}
                                                     @endif
                                                 </td>
                                                 <td>{{$musico->instrumento}}</td>
@@ -157,12 +160,24 @@
                                             <tr>
                                                 <td>{{$musico->name}}</td>
                                                 <td>
-                                                    @if($musico->status == 'rjm')
+                                                    @if($musico->status == 'iniciante')
+                                                        {{'Iniciante'}}
+                                                    @elseif($musico->status == 'ensaio')
+                                                        {{'Ensaio'}}
+                                                    @elseif($musico->status == 'rjm')
                                                         {{'Reunião de Jovens e Menores'}}
                                                     @elseif($musico->status == 'oficial')
                                                         {{'Culto Oficial'}}
-                                                    @elseif($musico->status == 'oficializado' || $musico->status == 'auxiliar' || $musico->status == 'instrutor'))
+                                                    @elseif($musico->status == 'oficializado')
                                                         {{'Oficializado'}}
+                                                    @elseif($musico->status == 'auxiliar')
+                                                        {{'Auxiliar'}}
+                                                    @elseif($musico->status == 'instrutor')
+                                                        {{'Instrutor'}}
+                                                    @elseif($musico->status == 'enc_local')
+                                                        {{'Encarregado Local'}}
+                                                    @elseif($musico->status == 'enc_regional')
+                                                        {{'Encarregado Regional'}}
                                                     @endif
                                                 </td>
                                                 <td>{{$musico->instrumento}}</td>
@@ -192,16 +207,26 @@
                                 </thead>
                                 <tbody>
                                     @foreach($musicos as $musico)
-                                        @if($musico->instrumento == 'Órgão' && ($musico->status == 'rjm' || $musico->status == 'oficial' || $musico->status == 'oficializado' || $musico->status == 'auxiliar' || $musico->status == 'instrutora' || $musico->status == 'examinadora'))
+                                        @if($musico->instrumento == 'Órgão' && ($musico->status == 'rjm' || $musico->status == 'oficial' || $musico->status == 'oficializado' || $musico->status == 'auxiliar' || $musico->status == 'instrutor' || $musico->status == 'examinadora'))
                                             <tr>
                                                 <td>{{$musico->name}}</td>
                                                 <td>
-                                                    @if($musico->status == 'rjm')
+                                                    @if($musico->status == 'iniciante')
+                                                        {{'Iniciante'}}
+                                                    @elseif($musico->status == 'ensaio')
+                                                        {{'Ensaio'}}
+                                                    @elseif($musico->status == 'rjm')
                                                         {{'Reunião de Jovens e Menores'}}
                                                     @elseif($musico->status == 'oficial')
                                                         {{'Culto Oficial'}}
-                                                    @elseif($musico->status == 'oficializado' || $musico->status == 'auxiliar' || $musico->status == 'instrutora' || $musico->status == 'examinadora'))
-                                                        {{'Oficializada'}}
+                                                    @elseif($musico->status == 'oficializado')
+                                                        {{'Oficializado'}}
+                                                    @elseif($musico->status == 'auxiliar')
+                                                        {{'Auxiliar'}}
+                                                    @elseif($musico->status == 'instrutor')
+                                                        {{'Instrutora'}}                                                    
+                                                    @elseif($musico->status == 'enc_regional')
+                                                        {{'Examinadora'}}                                                    
                                                     @endif
                                                 </td>
                                             </tr>

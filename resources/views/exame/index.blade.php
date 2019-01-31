@@ -9,11 +9,13 @@
             <div class="panel-body">
                 @include('admin.info')
                 <div class="form-group">
-                    <div class="pull-left">
-                        <a href="{{ url('/plano/' . $plano_id . '/aluno/' . $aluno->id . '/exame/create') }}" class="btn btn-success">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Novo
-                        </a>
-                    </div>
+                    @if(Auth::user()->status == 'enc_regional' || Auth::user()->status == 'enc_local' || Auth::user()->status == 'instrutor')
+                        <div class="pull-left">
+                            <a href="{{ url('/plano/' . $plano_id . '/aluno/' . $aluno->id . '/exame/create') }}" class="btn btn-success">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Novo
+                            </a>
+                        </div>
+                    @endif
                 </div>
                 <div class="form-group">
                     <div class="pull-right">
@@ -47,6 +49,8 @@
                                             {{'Reunião de Jovens e Menores'}}
                                         @elseif($exame->categoria == 'oficial')
                                             {{'Culto Oficial'}}
+                                        @elseif($exame->categoria == 'oficializado')
+                                            {{'Oficialização'}}
                                         @endif
                                     </td>
                                     @if($exame->apto == true)

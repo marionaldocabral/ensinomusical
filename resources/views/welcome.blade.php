@@ -7,6 +7,8 @@
 
         <title>Ensino Musical</title>
 
+        <link rel="shortcut icon" href="{{url('clave.png')}}" type="image/x-icon" />
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 

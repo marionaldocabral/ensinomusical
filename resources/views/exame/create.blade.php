@@ -31,7 +31,7 @@
                                         <option value="oficial">Culto Oficial</option>
                                     @endif
                                     @if($nivel < 5)
-                                        <option value="oficializacao">Oficialização</option>
+                                        <option value="oficializado">Oficialização</option>
                                     @endif
                                 </select>
                                 {!! $errors->first('categoria', '<p class="help-block">:message</p>') !!}
