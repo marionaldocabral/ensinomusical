@@ -145,19 +145,19 @@ class AlunoController extends Controller
         $aluno->endereco = $request->endereco;
         $aluno->bairro = $request->bairro;
         $aluno->email = $request->email;        
-        $aluno->telefone = remove_mascara($request->telefone);
+        $aluno->telefone = $this->remove_mascara($request->telefone);
         $data = $request->nascimento;
         $aluno->nascimento =  date('d/m/Y', strtotime($data));
         $aluno->status = $request->status;
         $aluno->responsavel = $request->responsavel;
-        $aluno->contato_resp = remove_mascara($request->contato_resp);
+        $aluno->contato_resp = $this->remove_mascara($request->contato_resp);
         $aluno->email_resp = $request->email_resp;
         $aluno->localidade_id = $request->localidade_id;
         $aluno->plano_id = $request->plano_id;
         $aluno->foto = $request->foto;
         $aluno->instrumento = $request->instrumento;
         $aluno->adm = $request->adm;
-        $aluno->password = bcrypt("teoriamusical");
+        $aluno->password = '';
 
         $aluno->save();
 

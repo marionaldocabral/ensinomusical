@@ -80,7 +80,7 @@
             @endif
 
             <div class="content">
-                <img src="http://www.pbcm.com.br/wp-content/uploads/2014/01/musica.jpg">
+                <img src="{{ url('welcome.jpg') }}" style="width: 300px;">
                 <div class="title m-b-md">
                     Ensino Musical
                 </div>
@@ -89,7 +89,6 @@
                     <a href="https://drive.google.com/file/d/0Bxuw124KRxp_M3l5ZWx3UEJXU3c/view?usp=sharing">MTS</a>
                     <a href="https://drive.google.com/file/d/0Bxuw124KRxp_aU5PX2d4dGJpVlU/view?usp=sharing">Hinario em PDF</a>
                     <a href="https://drive.google.com/drive/folders/0Bxuw124KRxp_NHNxOFlSeGVlRXc?usp=sharing">Hinario em MID</a>
-                    <!--<a href="https://drive.google.com/file/d/1DdFzMgeEVVJbj1LzVUzV_h1G8ZcXiQLN/view?usp=sharing">Plano de Ensino</a>-->
                 </div>
             </div>
         </div>
