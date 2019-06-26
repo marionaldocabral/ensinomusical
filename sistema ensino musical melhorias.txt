@@ -1,4 +1,0 @@
-avaliações
-tabela hinos
-filtros musicos por instrumento, categoria, voz, tipo e exibir num sumario ao logar
-acesso alunos e materiasi e informações que serao vistas por eles
