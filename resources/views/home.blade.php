@@ -17,7 +17,7 @@
                             <div class="table-responsive">
                                 <table class="table table-borderless">
                                     <thead>
-                                        <th>Localidade</th>
+                                        <th>Localidad</th>
                                         <th>Enc. Reg.</th>
                                         <th>Enc. Local</th>
                                         <th>Músicos</th>
