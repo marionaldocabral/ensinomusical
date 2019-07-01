@@ -223,4 +223,18 @@ class UserController extends Controller
         }
         return $resultado;
     }
+
+
+    public function redefine($id){
+        $user = \App\User::findOrfail($id);
+        $email = $user->email;
+        return view('auth.redefine', compact('user', 'email'));
+    }
+
+    public function salvar_senha($user_id, Request $request){
+        $user = \App\User::findOrfail($user_id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return redirect('/home')->with('success', 'Senha redefinida com sucesso!');
+    }
 }

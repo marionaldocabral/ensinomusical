@@ -169,7 +169,7 @@
                         </div>
                         <div class="form-group" style="margin-top: 6px;">
                              <div class="pull-left">
-                                <button class="btn btn-success" type="submit">
+                                <button class="btn btn-success" type="submit" id="btn-cad">
                                     <i class="fa fa-check" aria-hidden="true"></i> Criar
                                 </button>
                             </div>
@@ -184,5 +184,26 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#btn-cad').attr('disabled', '')
+            $('#password').keyup(function(){
+                senha = $('#password').val()
+                confirmacao = $('#password-confirm').val()
+                if(senha != '' && senha == confirmacao)
+                    $('#btn-cad').removeAttr('disabled')
+                else
+                    $('#btn-cad').attr('disabled', '')
+            })
+            $('#password-confirm').keyup(function(){
+                senha = $('#password').val()
+                confirmacao = $('#password-confirm').val()
+                if(senha != '' && senha == confirmacao)
+                    $('#btn-cad').removeAttr('disabled')
+                else
+                    $('#btn-cad').attr('disabled', '')
+            })
+        })
+    </script>
 </div>
 @endsection

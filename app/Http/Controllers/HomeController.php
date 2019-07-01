@@ -7,6 +7,7 @@ use App\Localidade;
 use App\User;
 use App\Instrumento;
 use App\Cidade;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -17,16 +18,11 @@ class HomeController extends Controller
 
     public function index()
     {
-        //
-        $users = User::all();
-        foreach($users as $user){
-            if($user->email != 'marionaldocabral@hotmail.com'){
-                $user->password = '';
-                $user->save();
-            }
-        }
+        //testando se o usuario usa senha padrão
+        $user = auth()->user();
+        if(Hash::check($user->email, $user->password) == true)
+            return redirect('/user/' . $user->id . '/redefine');
 
-        //
         $id = auth()->user()->localidade_id;
         $localidade = Localidade::findOrfail($id);
         $enc_regional = User::findOrfail($localidade->enc_reg_id);

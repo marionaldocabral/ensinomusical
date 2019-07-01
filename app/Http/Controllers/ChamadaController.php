@@ -30,6 +30,19 @@ class ChamadaController extends Controller
 
         $alunos = User::where('plano_id','=',$plano_id)->orderBy('name')->get();
 
+        $aulas = Aulasteorica::where('plano_id', '=', $plano_id)->get();
+        foreach ($aulas as $aula) {
+            foreach ($alunos as $aluno) {
+                $chamada = \App\Chamada::where([['aula_id', $aula->id], ['user_id', $aluno->id]])->first();
+                if($chamada == NULL){
+                    $chamada = new Chamada();
+                    $chamada->aula_id = $aula->id;
+                    $chamada->user_id = $aluno->id;
+                    $chamada->status = true; //presente
+                    $chamada->save();
+                }
+            }        
+        }
         $chamadas = Chamada::where('aula_id','=',$aula_id)->get();
 
         return view('chamada.index',compact('aula','alunos','plano','chamadas'));

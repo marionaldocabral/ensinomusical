@@ -181,13 +181,13 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row {{ $errors->has('senha') ? ' has-error' : '' }}">
-                            <label for="senha" class="col-md-4 control-label">Senha</label>
+                        <div class="row {{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Senha</label>
                             <div class="col-md-12">
-                                <input id="senha" type="password" class="form-control" name="password">
-                                @if ($errors->has('senha'))
+                                <input id="password" type="password" class="form-control" name="password">
+                                @if ($errors->has('password'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('senha') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="form-group" style="margin-top: 6px;">
                             <div class="pull-left">
-                                <button class="btn btn-success" type="submit">
+                                <button class="btn btn-success" type="submit" id="btn-cad">
                                     <i class="fa fa-check" aria-hidden="true"></i> Gravar
                                 </button>
                             </div>
@@ -216,5 +216,27 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function(){
+                $('#btn-cad').attr('disabled', '')
+                $('#password').keyup(function(){
+                    senha = $('#password').val()
+                    confirmacao = $('#password-confirm').val()
+                    if(senha != '' && senha == confirmacao)
+                        $('#btn-cad').removeAttr('disabled')
+                    else
+                        $('#btn-cad').attr('disabled', '')
+                })
+                $('#password-confirm').keyup(function(){
+                    senha = $('#password').val()
+                    confirmacao = $('#password-confirm').val()
+                    if(senha != '' && senha == confirmacao)
+                        $('#btn-cad').removeAttr('disabled')
+                    else
+                        $('#btn-cad').attr('disabled', '')
+                })
+            })
+        </script>
     </div>
+    
 @endsection

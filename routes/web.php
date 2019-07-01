@@ -28,6 +28,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('home_filt
 
 //user Routes
 Route::group(['middleware'=> 'web'],function(){
+  Route::get('/user/{user_id}/redefine', 'UserController@redefine');
+  Route::post('/user/{user_id}/salvar_senha', 'UserController@salvar_senha');
   Route::get('user', 'UserController@index')->middleware('admin_filter');
   Route::get('user/create', 'UserController@create')->middleware('admin_filter');
   Route::get('user/{id}', 'UserController@show')->middleware('admin_filter');

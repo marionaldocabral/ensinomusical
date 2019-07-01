@@ -20,6 +20,141 @@ class ExercicioController extends Controller
         if(($user->status == 'iniciante' || $user->status == 'ensaio' || $user->status == 'rjm' || $user->status == 'oficial' || $user->status == 'oficializado') && $user->id != $id)
             return redirect('home')->with('erro', 'Permissão negada!');
         $aluno = User::findOrfail($id);
+        $exercicios = \App\Exercicio::where('aluno_id', $aluno->id)->get();
+        if(sizeof($exercicios) == 0){
+            for($modulo = 1; $modulo <= 12; $modulo++){
+                $lim;
+                if($modulo == 6 || $modulo == 7 || $modulo == 8 || $modulo == 9 || $modulo == 10)
+                    $lim = 20;
+                else
+                    $lim = 10;
+                for($numero = 1; $numero <= $lim; $numero++){
+                    $exercicio = new Exercicio();
+                    $exercicio->modulo = $modulo;
+                    $exercicio->numero = $numero;
+
+                    if($modulo == 1){
+                        if($numero < 9)
+                            $exercicio->pagina = 8;
+                        else
+                            $exercicio->pagina = 9;
+                    }
+                    if($modulo == 2){
+                        if($numero < 7)
+                            $exercicio->pagina = 12;
+                        else
+                            $exercicio->pagina = 13;
+                    }
+                    if($modulo == 3){
+                        if($numero < 4)
+                            $exercicio->pagina = 17;
+                        else
+                            $exercicio->pagina = 19;
+                    }
+                    if($modulo == 4){
+                        if($numero < 6)
+                            $exercicio->pagina = 23;
+                        elseif($numero == 6)
+                            $exercicio->pagina = 24;
+                        else
+                            $exercicio->pagina = 25;
+                    }
+                    if($modulo == 5){
+                        if($numero < 10)
+                            $exercicio->pagina = 30;
+                        else
+                            $exercicio->pagina = 31;
+                    }
+                    if($modulo == 6){
+                        if($numero < 4)
+                            $exercicio->pagina = 34;
+                        elseif($numero < 7)
+                            $exercicio->pagina = 35;
+                        elseif($numero < 14)
+                            $exercicio->pagina = 36;
+                        elseif($numero == 15)
+                            $exercicio->pagina = 38;
+                        elseif($numero == 16)
+                            $exercicio->pagina = 39;
+                        elseif($numero == 17)
+                            $exercicio->pagina = 40;
+                        elseif($numero == 18)
+                            $exercicio->pagina = 41;
+                        elseif($numero == 19)
+                            $exercicio->pagina = 42;
+                        else
+                            $exercicio->pagina = 43;
+                    }
+                    if($modulo == 7){
+                        if($numero < 5)
+                            $exercicio->pagina = 40;
+                        elseif($numero < 7)
+                            $exercicio->pagina = 41;
+                        elseif($numero < 9)
+                            $exercicio->pagina = 42;
+                        elseif($numero == 12)
+                            $exercicio->pagina = 43;
+                        elseif($numero == 18)
+                            $exercicio->pagina = 44;
+                        else
+                            $exercicio->pagina = 45;
+                    }
+                    if($modulo == 8){
+                        if($numero < 3)
+                            $exercicio->pagina = 48;
+                        elseif($numero < 5)
+                            $exercicio->pagina = 49;
+                        elseif($numero < 8)
+                            $exercicio->pagina = 50;
+                        elseif($numero == 11)
+                            $exercicio->pagina = 51;
+                        else
+                            $exercicio->pagina = 52;
+                    }
+                    if($modulo == 9){
+                        if($numero < 3)
+                            $exercicio->pagina = 56;
+                        elseif($numero < 7)
+                            $exercicio->pagina = 59;
+                        elseif($numero < 12)
+                            $exercicio->pagina = 60;
+                        else
+                            $exercicio->pagina = 61;
+                    }
+                    if($modulo == 10){
+                        if($numero < 4)
+                            $exercicio->pagina = 65;
+                        elseif($numero < 11)
+                            $exercicio->pagina = 66;
+                        elseif($numero < 16)
+                            $exercicio->pagina = 68;
+                        else
+                            $exercicio->pagina = 69;
+                    }
+                    if($modulo == 11){
+                        if($numero < 3)
+                            $exercicio->pagina = 73;
+                        else
+                            $exercicio->pagina = 74;
+                    }
+                    if($modulo == 12){
+                        if($numero < 3)
+                            $exercicio->pagina = 77;
+                        elseif($numero == 7)
+                            $exercicio->pagina = 78;
+                        elseif($numero < 6)
+                            $exercicio->pagina = 79;
+                        elseif($numero < 8)
+                            $exercicio->pagina = 80;
+                        else
+                            $exercicio->pagina = 81;
+                    }
+                    $exercicio->aluno_id = $aluno->id;
+                    $exercicio->save();
+                }
+            }
+        }
+
         $modulo1 = [];
         $modulo = Exercicio::where([['modulo', 1],['aluno_id', $id]])->get();
         $i = 1;
